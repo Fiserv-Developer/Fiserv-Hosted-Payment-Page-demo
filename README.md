@@ -1,1 +1,1 @@
-# IPG-Connect-Example
+# IPG Connect Example

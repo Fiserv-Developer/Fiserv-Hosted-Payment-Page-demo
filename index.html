@@ -1,0 +1,95 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title>IPG HTML & JavaScript Example (Version 1.1)</title>
+	<script src="https://code.jquery.com/jquery-3.5.1.min.js" /></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/crypto-js.min.js" /></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js" /></script>
+	<script>
+		$(function() {
+			/* Update Transcation Date Time */
+			$("input[name='txndatetime']").val(moment().format('YYYY:MM:DD-HH:mm:ss'));			
+			/* Intercept Payment Form Submit to calculate Request Hash */
+			$("#paymentForm").submit(function(event) {
+				/* Payment Form */
+				var paymentForm = $("#paymentForm");
+				/* Extract Payment Form Parameters */
+				var paymentParameters = paymentForm.serializeArray().reduce(function(obj, item) {
+					obj[item.name] = item.value;
+					return obj;
+				}, {});
+				/* Prepare Message Signature Content */
+				var messageSignatureContent = [ ];
+				const ignoreSignatureParameteres = [ "hashExtended", "sharedsecret" ];			
+				Object.keys(paymentParameters).filter(key => !ignoreSignatureParameteres.includes(key)).sort().forEach(function(key, index) {
+					messageSignatureContent.push(paymentParameters[key]);
+				});				
+				/* Calculate Message Signature */
+				const messageSignature = CryptoJS.HmacSHA256(messageSignatureContent.join("|"), paymentParameters["sharedsecret"]);
+				const messageSignatureBase64 = CryptoJS.enc.Base64.stringify(messageSignature);
+				/* Update Form Parameters */				
+				$("input[name='hashExtended']").val(messageSignatureBase64);
+				/* Remove "sharedsecret" field from payment form */
+				$("input[name='sharedsecret']").prop("disabled", true);
+			});
+		});	
+	</script>
+</head>
+<body>
+<form id="paymentForm" method="post" action="https://test.ipg-online.com/connect/gateway/processing">
+	<input type="hidden" name="hash_algorithm" value="HMACSHA256" />
+	<input type="hidden" name="hashExtended" value="" />
+	<fieldset>
+		<legend>IPG Connect Request Prerequisites</legend>
+		<p>The following values are <u>not sent</u> to the server but rather necessary to generate the according request hash.</p>
+		<p>
+			<label for="sharedsecret">Shared Secret:</label>
+			<input type="text" name="sharedsecret" value="" />
+		</p>
+	</fieldset>
+	<fieldset>
+		<legend>IPG Connect Request Details</legend>
+		<p>
+			<label for="storename">Store ID:</label>
+			<input type="text" name="storename" value="" />
+		</p>
+		<p>
+			<label for="timezone">Timezone:</label>
+			<input type="text" name="timezone" value="Europe/Berlin" />
+		</p>
+		<p>
+			<label for="txndatetime">Transaction Datetime:</label>
+			<input type="text" name="txndatetime" value="" readonly="readonly" />
+		</p>
+		<p>
+			<label for="chargetotal">Transaction Type:</label>
+			<select name="txntype">
+				<option value="sale">Sale</option>
+			</select>
+		</p>
+		<p>
+			<label for="chargetotal">Transaction Amount:</label>
+			<input type="text" name="chargetotal" value="13.00" />
+		</p>
+		<p>
+			<label for="currency">Currency (see ISO4217):</label>
+			<select name="currency">
+				<option value="784">AED (784)</option>
+				<option value="048">BHD (048)</option>
+				<option value="840">USD (840)</option>
+			</select>
+		</p>
+		<p>
+			<label for="checkoutoption">Checkoutoption:</label>
+			<select name="checkoutoption">
+				<option value="combinedpage">Combined Page</option>
+			</select>
+		</p>
+		<p>
+			<input type="submit" id="submit" value="Submit" />
+		</p>
+	</fieldset>   
+</form>
+</body>
+</html>
