@@ -45,14 +45,14 @@
 		<p>The following values are <u>not sent</u> to the server but rather necessary to generate the according request hash.</p>
 		<p>
 			<label for="sharedsecret">Shared Secret:</label>
-			<input type="text" name="sharedsecret" value="" />
+			<input type="text" name="sharedsecret" value="sharedsecret" />
 		</p>
 	</fieldset>
 	<fieldset>
 		<legend>IPG Connect Request Details</legend>
 		<p>
 			<label for="storename">Store ID:</label>
-			<input type="text" name="storename" value="" />
+			<input type="text" name="storename" value="80004160" />
 		</p>
 		<p>
 			<label for="timezone">Timezone:</label>
@@ -75,6 +75,7 @@
 		<p>
 			<label for="currency">Currency (see ISO4217):</label>
 			<select name="currency">
+				<option value="978">EUR (978)</option>				
 				<option value="784">AED (784)</option>
 				<option value="048">BHD (048)</option>
 				<option value="840">USD (840)</option>
