@@ -34,7 +34,7 @@
 				/* Prepare Message Signature Content */
 				const sharedSecret = $("input[name='sharedsecret']").val();
 				var messageSignatureContent = [ ];
-				const ignoreSignatureParameteres = [ "hashExtended", ];			
+				const ignoreSignatureParameteres = [ "hashExtended" ];
 				Object.keys(paymentParameters).filter(key => !ignoreSignatureParameteres.includes(key)).sort().forEach(function(key, index) {
 					messageSignatureContent.push(paymentParameters[key]);
 				});				
@@ -114,6 +114,25 @@
 				<option value="048">BHD (048)</option>
 				<option value="840">USD (840)</option>
 			</select>
+		</p>
+		<p>
+			<label for="responseFailURL">Failure URL:</label>
+			<input type="text" name="responseFailURL" size="60" value="https://test.ipg-online.com/webshop/response_failure.jsp" />
+		</p>
+		<p>
+			<label for="responseSuccessURL">Success URL:</label>
+			<input type="text" name="responseSuccessURL" size="60" value="https://test.ipg-online.com/webshop/response_success.jsp" />
+		</p>
+		<p>
+			<fieldset><legend>Tokenization</legend>
+			<p>
+				<label for="assignToken">Assign Token:</label>
+				<select name="assignToken">
+					<option value="false">false</option>
+					<option value="true">true</option>
+				</select>
+			</p>
+			</fieldset>			
 		</p>
 		<p>
 			<input type="submit" id="submit" value="Submit" />
