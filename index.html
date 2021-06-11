@@ -81,7 +81,8 @@
 			<label for="paymentMethod">Payment Method:</label>
 			<select name="paymentMethod">
 				<option value="V">Visa</option>
-				<option value="M">Mastercard</option>				
+				<option value="M">Mastercard</option>
+				<option value="BLIK">BLIK</option>					
 			</select>
 		</p>
 		<p>
@@ -104,6 +105,13 @@
 		<p>
 			<label for="chargetotal">Transaction Amount:</label>
 			<input type="text" name="chargetotal" value="13.00" />
+		</p>
+		<p>
+			<label for="authenticateTransaction">Authenticate Transaction:</label>
+			<select name="authenticateTransaction">
+				<option value="false">false</option>
+				<option value="true">true</option>
+			</select>
 		</p>
 		<p>
 			<label for="currency">Currency (see ISO4217):</label>
@@ -132,7 +140,7 @@
 					<option value="true">true</option>
 				</select>
 			</p>
-			</fieldset>			
+			</fieldset>
 		</p>
 		<p>
 			<input type="submit" id="submit" value="Submit" />
