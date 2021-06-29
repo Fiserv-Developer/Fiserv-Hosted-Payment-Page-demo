@@ -27,7 +27,9 @@
 				var paymentForm = $("#paymentForm");
 				paymentForm.attr('action', environmentUrl);
 				/* Extract Payment Form Parameters */
-				var paymentParameters = paymentForm.serializeArray().reduce(function(obj, item) {
+				var paymentParameters = paymentForm.serializeArray().filter(function(item) {
+					return item.value !== "";
+				}).reduce(function(obj, item) {
 					obj[item.name] = item.value;
 					return obj;
 				}, {});
@@ -53,7 +55,7 @@
 <div>
 	<fieldset>
 	<legend>IPG Connect Request Prerequisites</legend>
-	<p>The following values are <u>not sent</u> to the server but rather necessary to generate the according request hash.</p>
+	<p>The following values are <u>not sent</u> to the server but rather necessary to generate the according request hash. The request hash calculation does not include parameters with empty values.</p>
 	<p>
 		<label for="environment">Test Environment:</label>
 		<select name="environment">			
@@ -70,12 +72,20 @@
 	<form id="paymentForm" method="post" action="#">
 	<input type="hidden" name="hash_algorithm" value="HMACSHA256" />
 	<input type="hidden" name="checkoutoption" value="combinedpage" />
+	<input type="hidden" name="language" value="en_US" />
 	<input type="hidden" name="hashExtended" value="" />
 	<fieldset>
 		<legend>IPG Connect Request Details</legend>
 		<p>
 			<label for="storename">Store ID:</label>
 			<input type="text" name="storename" value="80004160" />
+		</p>
+		<p>
+			<label for="full_bypass">Full ByPass:</label>
+			<select name="full_bypass">
+				<option value="false">false</option>
+				<option value="true">true</option>			
+			</select>
 		</p>
 		<p>
 			<label for="paymentMethod">Payment Method:</label>
@@ -114,13 +124,26 @@
 			</select>
 		</p>
 		<p>
-			<label for="currency">Currency (see ISO4217):</label>
+			<label for="currency">Currency (see <a href="https://de.wikipedia.org/wiki/ISO_4217">ISO4217</a>):</label>
 			<select name="currency">
 				<option value="978">EUR (978)</option>	
 				<option value="985">PLN (985)</option>				
 				<option value="784">AED (784)</option>
 				<option value="048">BHD (048)</option>
 				<option value="840">USD (840)</option>
+			</select>
+		</p>
+		<p>
+			<label for="referencedSchemeTransactionId">Referenced Scheme Transaction Id:</label>
+			<input type="text" name="referencedSchemeTransactionId" value="" />
+		</p>
+		<p>
+			<label for="unscheduledCredentialOnFileType">Unscheduled Credential On FileType:</label>
+			<select name="unscheduledCredentialOnFileType">
+				<option value=""></option>
+				<option value="FIRST">FIRST</option>
+				<option value="CARDHOLDER_INITIATED">CARDHOLDER_INITIATED</option>
+				<option value="MERCHANT_INITIATED">MERCHANT_INITIATED</option>
 			</select>
 		</p>
 		<p>
@@ -139,6 +162,10 @@
 					<option value="false">false</option>
 					<option value="true">true</option>
 				</select>
+			</p>
+			<p>
+				<label for="hosteddataid">Hosted Data Id:</label>
+				<input type="text" name="hosteddataid" size="60" value="" />
 			</p>
 			</fieldset>
 		</p>
