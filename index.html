@@ -2,7 +2,7 @@
 <html>
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-	<title>IPG HTML & JavaScript Example (Version 1.2)</title>
+	<title>IPG HTML & JavaScript Example (Version 1.3)</title>
 	<script src="https://code.jquery.com/jquery-3.5.1.min.js" /></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.0.0/crypto-js.min.js" /></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js" /></script>
@@ -61,6 +61,7 @@
 		<select name="environment">			
 			<option value="https://test.ipg-online.com/connect/gateway/processing">CI / Test</option>
 			<option value="https://test2.ipg-online.com/connect/gateway/processing">Test2</option>
+			<option value="https://test3.ipg-online.com/connect/gateway/processing">Test3</option>
 			<option value="https://www.ipg-online.com/connect/gateway/processing">Prod</option>
 		</select>
 	</p>		
@@ -88,12 +89,18 @@
 			</select>
 		</p>
 		<p>
+			<label for="dccSkipOffer">Skip DCC Offer:</label>
+			<select name="dccSkipOffer">
+				<option value="false">false</option>
+				<option value="true">true</option>			
+			</select>		
+		</p>
+		<p>
 			<label for="paymentMethod">Payment Method:</label>
 			<select name="paymentMethod">
 				<option value="">-</option>
 				<option value="V">Visa</option>
-				<option value="M">Mastercard</option>
-				<option value="BLIK">BLIK</option>					
+				<option value="M">Mastercard</option>	
 			</select>
 		</p>
 		<p>
