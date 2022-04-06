@@ -8,4 +8,4 @@ For steps where no direct consumer interaction is required and no sensitive card
 
 More information can be found here:
 
-https://docs.fiserv.com/docs/payments/docs/3.%20Hosted%20Payment%20Page/1.%20AA%20Introduction.md
+https://docs.fiserv.dev/public/docs/payments
